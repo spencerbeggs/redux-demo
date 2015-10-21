@@ -1,13 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Grid } from 'react-bootstrap';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
-const App = React.createClass({
-  render() {
-    return (
-      <Grid>Hello Redux!</Grid>
-    );
-  }
-});
+import App from './containers/App';
+import todoApp from './reducers';
 
-render(<App />, document.getElementById('app'));
+let store = createStore(todoApp);
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('app')
+);
