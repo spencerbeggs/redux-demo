@@ -1,17 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { ReduxRouter } from 'redux-router';
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
-import App from './containers/App';
-import todoApp from './reducers';
+import createStore from './store/configureStore';
 
-let store = createStore(todoApp);
+let store = createStore();
 
 render(
   <Provider store={store}>
-    <App />
+    <ReduxRouter />
   </Provider>,
   document.getElementById('app')
 );

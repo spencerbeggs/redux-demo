@@ -1,3 +1,11 @@
 body {
   padding: 20px
 }
+
+.main {
+  padding-top: 40px
+}
+
+ul li a.active {
+  color: red
+}

@@ -1,70 +1,26 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+
+import { Link, IndexLink } from 'react-router';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions';
-import AddTodo from '../components/AddTodo';
-import TodoList from '../components/TodoList';
-import Footer from '../components/Footer';
-
-export default class App extends Component {
+export default class App extends React.Component {
   render() {
-
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
-
     return (
-      <Grid style={{ paddingTop: 200 }}>
-        <Row>
-          <Col xs={4} xsOffset={4}>
-            <AddTodo
-              onAddClick={text =>
-                dispatch(addTodo(text))
-              } />
-            <TodoList
-              todos={visibleTodos}
-              onTodoClick={index =>
-                dispatch(completeTodo(index))
-              } />
-            <Footer
-              filter={visibilityFilter}
-              onFilterChange={nextFilter  =>
-                dispatch(setVisibilityFilter(nextFilter))
-              } />
-          </Col>
+      <Grid>
+        <div className="main">
+          <Row>
+            <Col xs={4}>
+              <ul>
+                <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
+                <li><Link to="/todo" activeClassName="active">Todo</Link></li>
+              </ul>
+            </Col>
+            <Col xs={8}>
+              {this.props.children}
+            </Col>
         </Row>
+        </div>
       </Grid>
     );
   }
 }
-
-App.propTypes = {
-  visibleTodos: PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
-  })),
-  visibilityFilter: PropTypes.oneOf([
-    'SHOW_ALL',
-    'SHOW_COMPLETED',
-    'SHOW_ACTIVE'
-  ]).isRequired
-};
-
-function selectTodos(todos, filter) {
-  switch (filter) {
-  case VisibilityFilters.SHOW_ALL:
-    return todos;
-  case VisibilityFilters.SHOW_COMPLETED:
-    return todos.filter(todo => todo.completed);
-  case VisibilityFilters.SHOW_ACTIVE:
-    return todos.filter(todo => !todo.completed);
-  }
-}
-
-function select(state) {
-  return {
-    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
-    visibilityFilter: state.visibilityFilter
-  };
-}
-
-export default connect(select)(App);
