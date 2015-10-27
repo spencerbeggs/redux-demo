@@ -18,7 +18,7 @@ export default class App extends React.Component {
             <Col xs={8}>
               {this.props.children}
             </Col>
-        </Row>
+          </Row>
         </div>
       </Grid>
     );

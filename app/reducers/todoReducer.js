@@ -1,6 +1,14 @@
 import { combineReducers } from 'redux';
-import { ADD_TODO_SUCCESS, RECEIVE_TODOS, COMPLETE_TODO_SUCCESS, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/todo';
+import { List } from 'immutable';
+
+import { ADD_TODO_SUCCESS, RECEIVE_TODOS, REQUEST_TODOS, COMPLETE_TODO_SUCCESS, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/todo';
+
 const { SHOW_ALL } = VisibilityFilters;
+
+const initialState = {
+  isProcessing: false,
+  data: []
+};
 
 function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
@@ -11,20 +19,32 @@ function visibilityFilter(state = SHOW_ALL, action) {
   }
 }
 
-function todos(state = [], action) {
+function todos(state = initialState, action) {
   switch (action.type) {
   case ADD_TODO_SUCCESS:
-    return [...state, action.todo];
+    return {
+      isProcessing: false,
+      data: [...state.data, action.todo]
+    }
+  case REQUEST_TODOS:
+    return {
+      ...state,
+      isProcessing: true
+    }
   case RECEIVE_TODOS:
-    return action.todos.map((todo) => {
-      return Object.assign({}, todo);
-    });
+    return {
+      isProcessing: false,
+      data: List(action.todos).toArray()
+    }
   case COMPLETE_TODO_SUCCESS:
-    return [
-      ...state.slice(0, action.index),
-      Object.assign({}, action.todo),
-      ...state.slice(action.index + 1)
-    ];
+    return {
+      isProcessing: false,
+      data: [
+        ...state.data.slice(0, action.index),
+        Object.assign({}, action.todo),
+        ...state.data.slice(action.index + 1)
+      ]
+    }
   default:
     return state;
   }

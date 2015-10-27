@@ -6,6 +6,7 @@ import { addTodo, fetchTodos, completeTodo, setVisibilityFilter, VisibilityFilte
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
+import Spinner from '../components/lib/Spinner'
 
 class TodoApp extends Component {
 
@@ -16,27 +17,30 @@ class TodoApp extends Component {
 
   render() {
 
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const { dispatch, visibleTodos, visibilityFilter, isProcessing } = this.props;
 
     return (
-      <Row>
-        <Col xs={8}>
-          <AddTodo
-            onAddClick={text =>
-              dispatch(addTodo(text))
-            } />
-          <TodoList
-            todos={visibleTodos}
-            onTodoClick={index =>
-              dispatch(completeTodo(index))
-            } />
-          <Footer
-            filter={visibilityFilter}
-            onFilterChange={nextFilter  =>
-              dispatch(setVisibilityFilter(nextFilter))
-            } />
-        </Col>
-      </Row>
+      <div>
+        <Spinner show={isProcessing} />
+        <Row>
+          <Col xs={8}>
+            <AddTodo
+              onAddClick={text =>
+                dispatch(addTodo(text))
+              } />
+            <TodoList
+              todos={visibleTodos}
+              onTodoClick={index =>
+                dispatch(completeTodo(index))
+              } />
+            <Footer
+              filter={visibilityFilter}
+              onFilterChange={nextFilter  =>
+                dispatch(setVisibilityFilter(nextFilter))
+              } />
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
@@ -67,7 +71,8 @@ function selectTodos(todos, filter) {
 function select(state) {
   const todo = state.todo;
   return {
-    visibleTodos: selectTodos(todo.todos, todo.visibilityFilter),
+    isProcessing: todo.todos.isProcessing,
+    visibleTodos: selectTodos(todo.todos.data, todo.visibilityFilter),
     visibilityFilter: todo.visibilityFilter
   };
 }
