@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 import { addTodo, fetchTodos, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions/todo';
-import AddTodo from '../components/AddTodo';
-import TodoList from '../components/TodoList';
-import Footer from '../components/Footer';
+import AddTodo from '../components/todos/AddTodo';
+import TodoList from '../components/todos/TodoList';
+import Footer from '../components/todos/Footer';
 import Spinner from '../components/lib/Spinner'
 
 class TodoApp extends Component {
@@ -71,8 +71,8 @@ function selectTodos(todos, filter) {
 function select(state) {
   const todo = state.todo;
   return {
-    isProcessing: todo.todos.isProcessing,
-    visibleTodos: selectTodos(todo.todos.data, todo.visibilityFilter),
+    isProcessing: todo.todos.get('isProcessing'),
+    visibleTodos: selectTodos(todo.todos.get('todos').toArray(), todo.visibilityFilter),
     visibilityFilter: todo.visibilityFilter
   };
 }

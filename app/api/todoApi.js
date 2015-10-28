@@ -8,7 +8,7 @@ const TODOS = [
 export default {
 
   add(text) {
-    return Promise.delay(1000)
+    return Promise.delay(500)
       .then(() => {
         let todo = { text: text, completed: false };
         TODOS.push(todo);
@@ -17,18 +17,17 @@ export default {
   },
 
   get() {
-    return Promise.delay(2000)
+    return Promise.delay(1000)
       .then(() => {
         return TODOS;
       });
   },
 
   complete(index) {
-    return Promise.delay(1000)
+    return Promise.delay(500)
       .then(() => {
-        let todo = TODOS[index];
-        todo.completed = true;
-        return todo;
+        TODOS[index] = Object.assign({}, TODOS[index], { completed: true });
+        return TODOS[index];
       });
   }
 };

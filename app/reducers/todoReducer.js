@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 
-import { ADD_TODO_SUCCESS, RECEIVE_TODOS, REQUEST_TODOS, COMPLETE_TODO_SUCCESS, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/todo';
+import { TODO_REQUEST, ADD_TODO_SUCCESS, RECEIVE_TODOS, COMPLETE_TODO_SUCCESS, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/todo';
 
 const { SHOW_ALL } = VisibilityFilters;
 
-const initialState = {
+const initialState = Map({
   isProcessing: false,
-  data: []
-};
+  todos: List(),
+});
 
 function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
@@ -21,30 +21,23 @@ function visibilityFilter(state = SHOW_ALL, action) {
 
 function todos(state = initialState, action) {
   switch (action.type) {
+  case TODO_REQUEST:
+    return state.set('isProcessing', true);
   case ADD_TODO_SUCCESS:
-    return {
+    return state.merge({
       isProcessing: false,
-      data: [...state.data, action.todo]
-    }
-  case REQUEST_TODOS:
-    return {
-      ...state,
-      isProcessing: true
-    }
+      todos: state.get("todos").push(action.todo)
+    });
   case RECEIVE_TODOS:
-    return {
+    return state.merge({
       isProcessing: false,
-      data: List(action.todos).toArray()
-    }
+      todos: List(action.todos)
+    });
   case COMPLETE_TODO_SUCCESS:
-    return {
+    return state.merge({
       isProcessing: false,
-      data: [
-        ...state.data.slice(0, action.index),
-        Object.assign({}, action.todo),
-        ...state.data.slice(action.index + 1)
-      ]
-    }
+      todos: state.get('todos').set(action.index, action.todo)
+    });
   default:
     return state;
   }
