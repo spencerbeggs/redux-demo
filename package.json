@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --content-base public"
+    "start": "node server.js"
   },
   "author": "",
   "license": "MIT",
@@ -17,15 +17,17 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.1"
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.4.1"
   },
   "dependencies": {
     "bluebird": "^2.10.2",
+    "express": "^4.13.3",
     "history": "^1.12.5",
     "immutable": "^3.7.5",
-    "react": "^0.14.0",
+    "react": "^0.14.2",
     "react-bootstrap": "^0.27.2",
-    "react-dom": "^0.14.0",
+    "react-dom": "^0.14.2",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
     "redux": "^3.0.3",

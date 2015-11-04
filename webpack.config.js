@@ -4,19 +4,15 @@ var nodeModulesDir = path.resolve(__dirname, 'node_modules');
 var webAppPath = path.resolve(__dirname, 'app');
 
 module.exports = {
-  context: webAppPath,
-  entry: {
-    app: [
-      'webpack/hot/dev-server',
-      'webpack-dev-server/client?http://localhost:8080',
-       path.resolve(webAppPath, 'app.jsx')
-    ]
-  },
+  entry: [
+    'webpack-hot-middleware/client',
+     path.resolve(webAppPath, 'app.jsx')
+  ],
   devtool: 'source-map',
   output: {
-    path: './dist',
+    path: path.join(__dirname, 'dist'),
     filename: 'app.js',
-    publicPath: '__dist__'
+    publicPath: '/__dist__/'
   },
   module: {
     loaders: [
@@ -33,6 +29,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx', '.json']
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]
