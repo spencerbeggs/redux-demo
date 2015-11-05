@@ -12,6 +12,9 @@ app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output
 app.use(webpackHotMiddleware(compiler));
 
 app.use(express.static(__dirname + '/public/'));
+app.get('/*', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 app.listen(port, function(error) {
   if (error) {

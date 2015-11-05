@@ -7,14 +7,10 @@ import TodoApp from './containers/TodoApp';
 
 export default function getRoutes({ dispatch, getState }) {
 
-  const onEnter = function(nextState, replaceState) {
-    console.log(getState());
-  };
-
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
-      <Route path="/todo" component={TodoApp} onEnter={onEnter} />
+      <Route path="/todo" component={TodoApp} />
     </Route>
   );
 };

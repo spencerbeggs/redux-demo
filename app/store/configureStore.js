@@ -1,13 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { reduxReactRouter } from 'redux-router';
-import createHistory from 'history/lib/createHashHistory';
-import routes from '../routes';
+import createHistory from 'history/lib/createBrowserHistory';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import getRoutes from '../routes';
 import rootReducer from '../reducers';
-import makeRouteHooksSafe from '../helpers/makeRouteHooksSafe';
-
-const getRoutes = makeRouteHooksSafe(routes);
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
