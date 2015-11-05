@@ -30,7 +30,6 @@ class App extends React.Component {
 
     return (
       <ul>
-        <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
         <li><Link to="/login" activeClassName="active">Login</Link></li>
       </ul>
     );

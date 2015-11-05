@@ -14,7 +14,7 @@ class Login extends React.Component {
   }
 
   login(username, password) {
-    this.props.dispatch(login(username, password));
+    this.props.dispatch(login(username, password, this.props.location.query.nextPath));
   }
 
   componentWillUnmount() {
