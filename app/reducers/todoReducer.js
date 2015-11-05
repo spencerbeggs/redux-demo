@@ -5,10 +5,7 @@ import { TODO_REQUEST, ADD_TODO_SUCCESS, RECEIVE_TODOS, COMPLETE_TODO_SUCCESS, S
 
 const { SHOW_ALL } = VisibilityFilters;
 
-const initialState = Map({
-  isProcessing: false,
-  todos: List(),
-});
+const initialState = List();
 
 function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
@@ -21,31 +18,30 @@ function visibilityFilter(state = SHOW_ALL, action) {
 
 function todos(state = initialState, action) {
   switch (action.type) {
-  case TODO_REQUEST:
-    return state.set('isProcessing', true);
   case ADD_TODO_SUCCESS:
-    return state.merge({
-      isProcessing: false,
-      todos: state.get("todos").push(action.todo)
-    });
+    return state.push(action.todo);
   case RECEIVE_TODOS:
-    return state.merge({
-      isProcessing: false,
-      todos: List(action.todos)
-    });
+    return List(action.todos);
   case COMPLETE_TODO_SUCCESS:
-    return state.merge({
-      isProcessing: false,
-      todos: state.get('todos').set(action.index, action.todo)
-    });
+    return state.set(action.index, action.todo);
   default:
     return state;
   }
 }
 
+function isProcessing(state = false, action) {
+  switch (action.type) {
+  case TODO_REQUEST:
+    return true;
+  default:
+    return false;
+  }
+}
+
 const todoApp = combineReducers({
   visibilityFilter,
-  todos
+  todos,
+  isProcessing
 });
 
 export default todoApp;

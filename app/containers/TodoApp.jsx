@@ -71,8 +71,8 @@ function selectTodos(todos, filter) {
 function select(state) {
   const todo = state.todo;
   return {
-    isProcessing: todo.todos.get('isProcessing'),
-    visibleTodos: selectTodos(todo.todos.get('todos').toArray(), todo.visibilityFilter),
+    isProcessing: todo.isProcessing,
+    visibleTodos: selectTodos(todo.todos.toArray(), todo.visibilityFilter),
     visibilityFilter: todo.visibilityFilter
   };
 }
