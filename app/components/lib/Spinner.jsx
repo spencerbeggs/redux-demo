@@ -14,7 +14,7 @@ export default class Spinner extends React.Component {
       <div className="modal fade in" data-backdrop="static" style={this.getStyle()}>
         <div className="modal-dialog">
           <div className="text-center">
-            <i className="glyphicon glyphicon-refresh"></i>
+            <i className="fa fa-spinner fa-pulse fa-4x"></i>
           </div>
         </div>
         <div className="modal-backdrop fade in" />
