@@ -6,13 +6,17 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 
+import getRoutes from './routes';
+
 import createStore from './store/configureStore';
 
 let store = createStore();
 
 render(
   <Provider store={store}>
-    <ReduxRouter />
+    <ReduxRouter>
+      {getRoutes(store)}
+    </ReduxRouter>
   </Provider>,
   document.getElementById('app')
 );

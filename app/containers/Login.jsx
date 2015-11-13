@@ -14,7 +14,7 @@ class Login extends React.Component {
   }
 
   login(username, password) {
-    this.props.dispatch(login(username, password, this.props.location.query.nextPath));
+    this.props.dispatch(login(username, password, this.props.location.query.nextPathname));
   }
 
   componentWillUnmount() {
@@ -45,7 +45,9 @@ class Login extends React.Component {
       <div>
         <Spinner show={isProcessing} />
         <Row>
-          <Col xs={6}>
+          <Col
+            xs={4}
+            xsOffset={4}>
             <Panel
               header="Login Page">
               {this.renderMessage()}
