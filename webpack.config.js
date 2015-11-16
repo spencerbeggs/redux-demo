@@ -7,7 +7,8 @@ var webAppPath = path.resolve(__dirname, 'app');
 module.exports = {
   entry: [
     'webpack-hot-middleware/client',
-     path.resolve(webAppPath, 'app.jsx')
+     path.resolve(webAppPath, 'startup.js'),
+     path.resolve(webAppPath, 'js', 'app.jsx')
   ],
   devtool: 'source-map',
   output: {
