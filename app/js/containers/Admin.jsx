@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
 import { Link, IndexLink } from 'react-router';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { logout } from '../actions/auth';
@@ -55,4 +54,3 @@ class Admin extends React.Component {
 }
 
 export default connect((state) => state)(Admin);
-// export default Admin;

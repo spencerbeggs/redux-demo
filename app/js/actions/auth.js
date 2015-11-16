@@ -1,4 +1,4 @@
-import { pushState } from 'redux-router';
+import { updatePath  } from 'redux-simple-router';
 import authApi from '../api/auth';
 
 export const LOGIN = 'LOGIN';
@@ -31,7 +31,7 @@ export function login(username, password, nextPath='/') {
       .then((token) => {
         dispatch(loginSuccess(token));
         dispatch(clearMessage());
-        dispatch(pushState(null, nextPath));
+        dispatch(updatePath(nextPath));
       })
       .catch((err) => {
         dispatch(showMessage(err.message));
@@ -47,7 +47,7 @@ export function logout() {
       .then((result) => {
         dispatch({ type: LOGOUT_SUCCESS });
         dispatch(clearMessage());
-        dispatch(pushState(null, '/login'));
+        dispatch(updatePath('/login'));
       })
       .catch((err) => {
         dispatch(showMessage(err.message));
